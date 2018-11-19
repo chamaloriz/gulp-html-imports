@@ -10,7 +10,7 @@
 
 ## Gulp
 
-Then add it to the `gulpfile.js`:
+`gulpfile.js`:
 
 ```js
 var htmlImport = require('gulp-html-imports');
@@ -21,7 +21,7 @@ gulp.task('html_imports', function () {
         .pipe(gulp.dest('dist')); 
 })
 
-// Or 
+// Or this
 
 gulp.task('html_imports', function () {
     gulp.src('./index.html')
