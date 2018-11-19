@@ -22,20 +22,18 @@ gulp.task('html_imports', function () {
 })
 
 // Or
-
 gulp.task('html_imports', function () {
     gulp.src('./index.html')
         .pipe(htmlImport({
             componentsUrl: './components/',
             template: {
-	            '_VERSION_': '2018'
-	        }
+                '_VERSION_': '2018'
+            }
         }))
         .pipe(gulp.dest('dist')); 
 })
 
 // If you want to restore the html
-
 gulp.task('html_restore', function () {
     gulp.src('dist/index.html')
         .pipe(htmlImport({
