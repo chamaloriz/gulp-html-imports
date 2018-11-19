@@ -2,6 +2,7 @@
 
 - A gulp plugin.
 - Import html files into html files.
+- Restore html files.
 
 ## Usage
 ```bash
