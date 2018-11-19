@@ -1,19 +1,18 @@
-# gulp-html-import2
+# gulp-html-imports
 
-> This is forked npm (gulp-html-import).
-
-> A gulp plugin which can import .html files into .html files
+> A gulp plugin which can import html files into html files
 
 ## Usage
-First, install `gulp-html-import2` as a devDependency:
+```bash
+ $ npm install gulp-html-imports --save-dev
 ```
-npm install gulp-html-import2 --save-dev
-```
-Then add it to the `gulpfile.js`:
-```
-var htmlImport = require('gulp-html-import2');
 
-gulp.task('import', function () {
+Then add it to the `gulpfile.js`:
+
+```js
+var htmlImport = require('gulp-html-imports');
+
+gulp.task('html_imports', function () {
     gulp.src('./demo/index.html')
         .pipe(htmlImport('./demo/components/'))
         .pipe(gulp.dest('dist')); 
@@ -21,86 +20,11 @@ gulp.task('import', function () {
 ```
 
 ## Example
-Here is the files tree:
-```
-|
--- demo
-|   |
-|   -- components
-|   |    |
-|   |    -- header.html
-|   |    |
-|   |    -- footer.html
-|   |
-|   -- index.html
-|
--- gulpfile.js
-```
-Html files:
-```
-<!-- index.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gulp-html-import Example</title>
-</head>
-<body>
-    <!-- @import "header.html" -->
-    <p>Hello World</p>
-    <!-- @import "footer.html" -->
-</body>
-</html>
-```
-In your `index.html`, you should use
-```
-<!-- @import "XXX.html" -->
-```
-to import your components.
-```
-<!-- header.html -->
-
-<h1>I am the header</h1>
-```
-```
-<!-- footer.html -->
-
-<h1>I am the footer</h1>
-```
-When you get into the root directory(where your `gulpfile.js` is) and type
-
- ```
-gulp import
-```
-
- you could see a html file in `/dist` like this:
-```
-<!-- /dist/index.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gulp-html-import Example</title>
-</head>
-<body>
-    <h1>I am the header</h1>
-    <p>Hello World</p>
-    <h1>I am the footer</h1>
-</body>
-</html>
-```
-Everything is OK.
 
 ## API
-### htmlImport(string)
-#### string
-Type: `String`
-
-The url of your components
 
 ---
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright © 2016 Jrain Lau
+Copyright © 2018 Vic Yang
