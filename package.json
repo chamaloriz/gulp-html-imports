@@ -1,0 +1,21 @@
+{
+  "name": "gulp-html-imports",
+  "version": "1.0.0",
+  "description": "A gulp plugin which can import html files into html files",
+  "main": "index.js",
+  "dependencies": {
+    "through2": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "html",
+    "import"
+  ],
+  "author": "Vic Yang",
+  "license": "MIT"
+}
