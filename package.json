@@ -1,7 +1,7 @@
 {
   "name": "gulp-html-imports",
-  "version": "1.0.0",
-  "description": "A gulp plugin which can import html files into html files",
+  "version": "1.0.1",
+  "description": "A gulp plugin which can import html files, and restore html files.",
   "main": "index.js",
   "dependencies": {
     "through2": "^3.0.0"

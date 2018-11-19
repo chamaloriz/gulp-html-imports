@@ -21,7 +21,7 @@ gulp.task('html_imports', function () {
         .pipe(gulp.dest('dist')); 
 })
 
-// Or this
+// Or
 
 gulp.task('html_imports', function () {
     gulp.src('./index.html')
@@ -33,6 +33,17 @@ gulp.task('html_imports', function () {
         }))
         .pipe(gulp.dest('dist')); 
 })
+
+// If you want to restore the html
+
+gulp.task('html_restore', function () {
+    gulp.src('dist/index.html')
+        .pipe(htmlImport({
+            componentsUrl: './components/',
+            restore: true
+        }))
+        .pipe(gulp.dest('./')); 
+})
 ```
 
 ## Example
@@ -41,10 +52,10 @@ gulp.task('html_imports', function () {
 
 ```html
 <html>
-	<body>
-		<div>HTML import HTML</div>
-		<!-- @import "demo.html" -->
- 	</body>
+  <body>
+    <div>HTML import HTML</div>
+    <!-- @import "demo.html" -->
+  </body>
 </html>
 ```
 
@@ -63,13 +74,28 @@ gulp.task('html_imports', function () {
 
 ```html
 <html>
-	<body>
-		<div>HTML import HTML</div>
-		<!-- import "demo.html" -->
-		<div>This is demo.html.</div>
-		<div>Version is 2018</div>
-		<!-- import end -->
- 	</body>
+  <body>
+    <div>HTML import HTML</div>
+    <!-- import "demo.html" -->
+    <div>This is demo.html.</div>
+    <div>Version is 2018</div>
+    <!-- import end -->
+  </body>
+</html>
+```
+
+```bash
+ $ gulp html_restore
+```
+
+`index.html`
+
+```html
+<html>
+  <body>
+    <div>HTML import HTML</div>
+    <!-- @import "demo.html" -->
+  </body>
 </html>
 ```
 
@@ -82,12 +108,17 @@ Components html file path.
 
 - Type: String
 
-
 #### template: 
 
 Replace components html's content keyword.
 
 - Type: Object
+
+#### restore: 
+
+Restore html initial content.
+
+- Type: Boolean
 
 ---
 

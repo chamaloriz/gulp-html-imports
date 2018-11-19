@@ -3,8 +3,10 @@
 const through = require('through2')
 const fs = require('fs')
 
+const IMPORT_END = '<!-- import end -->'
+
 function importHtml(data, opts) {
-    const fileReg = /<!-- @import\s"(.*)" -->/gi
+    const fileReg = /<!-- @import "(.*)" -->/gi
 
     return data.replace(fileReg, (match, componentName) => {
         let read_file_content = fs.readFileSync(opts.componentsUrl + componentName, {
@@ -19,7 +21,18 @@ function importHtml(data, opts) {
         }
         console.log('@import: ' + opts.componentsUrl + componentName)
 
-        return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n<!-- import end -->'
+        return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
+    })
+}
+
+function restoreHtml(data, opts) {
+    const fileReg = eval('/<!-- import "(.*)" -->[^]+' + IMPORT_END + '/gi')
+
+    return data.replace(fileReg, (match, componentName) => {
+        let import_component = '<!-- @import "' + componentName + '" -->';
+        console.log(import_component)
+
+        return import_component
     })
 }
 
@@ -35,14 +48,14 @@ module.exports = function(opts) {
         }
 
         if (file.isStream()) {
-        	console.log('File is stream.' + file.path)
+            console.log('File is stream.' + file.path)
             return
         }
 
         let data = file.contents.toString()
-        let dataReplace = importHtml(data, opts);
-        file.contents = new Buffer(dataReplace)
+        let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts);
 
+        file.contents = new Buffer(dataReplace)
         callback(null, file)
     })
 }
