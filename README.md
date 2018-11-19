@@ -76,6 +76,19 @@ gulp.task('html_imports', function () {
 
 ## Options
 
+#### componentsUrl: 
+
+Components html file path.
+
+- Type: String
+
+
+#### template: 
+
+Replace components html's content keyword.
+
+- Type: Object
+
 ---
 
 [MIT](https://opensource.org/licenses/MIT)
