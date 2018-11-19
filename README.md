@@ -1,11 +1,14 @@
 # gulp-html-imports
 
-> A gulp plugin which can import html files into html files
+- A gulp plugin.
+- Import html files into html files.
 
 ## Usage
 ```bash
  $ npm install gulp-html-imports --save-dev
 ```
+
+## Gulp
 
 Then add it to the `gulpfile.js`:
 
@@ -13,8 +16,18 @@ Then add it to the `gulpfile.js`:
 var htmlImport = require('gulp-html-imports');
 
 gulp.task('html_imports', function () {
-    gulp.src('./demo/index.html')
-        .pipe(htmlImport('./demo/components/'))
+    gulp.src('./index.html')
+        .pipe(htmlImport('./components/'))
+        .pipe(gulp.dest('dist')); 
+})
+
+// Or 
+
+gulp.task('html_imports', function () {
+    gulp.src('./index.html')
+        .pipe(htmlImport({
+            componentsUrl: './components/'
+        }))
         .pipe(gulp.dest('dist')); 
 })
 ```
@@ -22,9 +35,10 @@ gulp.task('html_imports', function () {
 ## Example
 
 
-## API
+## Options
 
 ---
+
 [MIT](https://opensource.org/licenses/MIT)
 
 Copyright © 2018 Vic Yang
