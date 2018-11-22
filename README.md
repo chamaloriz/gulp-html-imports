@@ -26,7 +26,7 @@ gulp.task('html_imports', function () {
 gulp.task('html_imports', function () {
     gulp.src('./index.html')
         .pipe(htmlImport({
-            componentsUrl: './components/',
+            componentsPath: './components/',
             template: {
                 '_VERSION_': '2018'
             }
@@ -38,7 +38,7 @@ gulp.task('html_imports', function () {
 gulp.task('html_restore', function () {
     gulp.src('dist/index.html')
         .pipe(htmlImport({
-            componentsUrl: './components/',
+            componentsPath: './components/',
             restore: true
         }))
         .pipe(gulp.dest('./')); 
@@ -101,7 +101,7 @@ gulp.task('html_restore', function () {
 
 ## Options
 
-#### componentsUrl: 
+#### componentsPath: 
 
 Components html file path.
 

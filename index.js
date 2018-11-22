@@ -9,7 +9,7 @@ function importHtml(data, opts) {
     const fileReg = /<!-- @import "(.*)" -->/gi
 
     return data.replace(fileReg, (match, componentName) => {
-        let read_file_content = fs.readFileSync(opts.componentsUrl + componentName, {
+        let read_file_content = fs.readFileSync(opts.componentsPath + componentName, {
             encoding: 'utf8'
         });
 
@@ -19,7 +19,7 @@ function importHtml(data, opts) {
                 read_file_content = read_file_content.replace(k_reg, opts.template[k])
             }
         }
-        console.log('@import: ' + opts.componentsUrl + componentName)
+        console.log('@import: ' + opts.componentsPath + componentName)
 
         return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
     })
@@ -38,7 +38,7 @@ function restoreHtml(data, opts) {
 
 module.exports = function(opts) {
     if (typeof opts === 'string') {
-        opts = { componentsUrl: opts }
+        opts = { componentsPath: opts }
     }
 
     return through.obj(function(file, enc, callback) {
