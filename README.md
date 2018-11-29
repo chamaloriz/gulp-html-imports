@@ -4,44 +4,52 @@
 - Import html files into html files.
 - Restore html files.
 
-## Usage
+## Install
 ```bash
  $ npm install gulp-html-imports --save-dev
 ```
 
-## Gulp
+## Usage
 
-`gulpfile.js`:
+### `gulpfile.js`:
 
 ```js
-var htmlImport = require('gulp-html-imports');
+var htmlImport = require('gulp-html-imports')
+```
 
+### Simple
+
+```js
 gulp.task('html_imports', function () {
-    gulp.src('./index.html')
-        .pipe(htmlImport('./components/'))
-        .pipe(gulp.dest('dist')); 
+  gulp.src('./index.html')
+    .pipe(htmlImport('./components/'))
+    .pipe(gulp.dest('dist'))
 })
 
-// Or
+```
+
+### Option `"template"`: Replace html contents
+
+```js
 gulp.task('html_imports', function () {
-    gulp.src('./index.html')
-        .pipe(htmlImport({
-            componentsPath: './components/',
-            template: {
-                '_VERSION_': '2018'
-            }
-        }))
-        .pipe(gulp.dest('dist')); 
+  gulp.src('./index.html')
+    .pipe(htmlImport({
+      componentsPath: './components/',
+      template: {
+        '_VERSION_': '2018'
+      }
+    }))
+    .pipe(gulp.dest('dist'))
 })
 
 // If you want to restore the html
 gulp.task('html_restore', function () {
-    gulp.src('dist/index.html')
-        .pipe(htmlImport({
-            componentsPath: './components/',
-            restore: true
-        }))
-        .pipe(gulp.dest('./')); 
+  gulp.src('dist/index.html')
+    .pipe(htmlImport({
+      componentsPath: './components/',
+      restore: true
+    }))
+    .pipe(gulp.dest('./'))
 })
 ```
 
@@ -66,7 +74,7 @@ gulp.task('html_restore', function () {
 ```
 
 ```bash
- $ gulp html_imports	
+ $ gulp html_imports  
 ```
 
 `dist/index.html`

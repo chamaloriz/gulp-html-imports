@@ -30,7 +30,7 @@ function restoreHtml(data, opts) {
 
     return data.replace(fileReg, (match, componentName) => {
         let import_component = '<!-- @import "' + componentName + '" -->';
-        console.log(import_component)
+        console.log('@restore: ' + componentName)
 
         return import_component
     })
@@ -51,6 +51,8 @@ module.exports = function(opts) {
             console.log('File is stream.' + file.path)
             return
         }
+
+        opts.filePath = file.path
 
         let data = file.contents.toString()
         let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts);
