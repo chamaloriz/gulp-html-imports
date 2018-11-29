@@ -52,7 +52,7 @@ module.exports = function(opts) {
             return
         }
 
-        opts.filePath = file.path
+        // opts.filePath = file.path
 
         let data = file.contents.toString()
         let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts);
