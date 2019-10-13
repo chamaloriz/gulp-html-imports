@@ -17,6 +17,24 @@ function importHtml(data, opts) {
             encoding: 'utf8'
         });
 
+        if (opts.nestedIncludes) {
+            read_file_content = read_file_content.replace(fileReg, (match, componentName) => {
+                let nested_include_content = fs.readFileSync(opts.componentsPath + componentName, {
+                    encoding: 'utf8'
+                });
+
+                if (opts.template) {
+                    for (let k in opts.template) {
+                        let k_reg = eval("/" + escapeRegExp(k) + "/g")
+                        nested_include_content = nested_include_content.replace(k_reg, opts.template[k])
+                    }
+                }
+                console.log('Nested @import: ' + opts.componentsPath + componentName)
+
+                return '<!-- import "' + componentName + '" -->\n' + nested_include_content + '\n' + IMPORT_END
+            })
+        }
+
         if (opts.template) {
             for (let k in opts.template) {
                 let k_reg = eval("/" + escapeRegExp(k) + "/g")
