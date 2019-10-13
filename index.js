@@ -5,6 +5,10 @@ const fs = require('fs')
 
 const IMPORT_END = '<!-- import end -->'
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 function importHtml(data, opts) {
     const fileReg = /<!-- @import "(.*)" -->/gi
 
@@ -15,10 +19,11 @@ function importHtml(data, opts) {
 
         if (opts.template) {
             for (let k in opts.template) {
-                let k_reg = eval("/" + k + "/g")
+                let k_reg = eval("/" + escapeRegExp(k) + "/g")
                 read_file_content = read_file_content.replace(k_reg, opts.template[k])
             }
         }
+
         console.log('@import: ' + opts.componentsPath + componentName)
 
         return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
@@ -30,7 +35,7 @@ function restoreHtml(data, opts) {
 
     return data.replace(fileReg, (match, componentName) => {
         let import_component = '<!-- @import "' + componentName + '" -->';
-        console.log('@restore: ' + componentName)
+        console.log(import_component)
 
         return import_component
     })
@@ -52,9 +57,15 @@ module.exports = function(opts) {
             return
         }
 
-        // opts.filePath = file.path
-
         let data = file.contents.toString()
+
+        if (opts.template) {
+            for (let k in opts.template) {
+                let k_reg = eval("/" + escapeRegExp(k) + "/g")
+                data = data.replace(k_reg, opts.template[k])
+            }
+        }
+
         let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts);
 
         file.contents = new Buffer(dataReplace)
