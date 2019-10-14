@@ -108,12 +108,12 @@ gulp.task('html_restore', function () {
 
 ## Options
 
-| Name             | Type    | Description                                |
-| ---------------- | ------- | ------------------------------------------ |
-| `componentsPath` | String  | Components html file path.                 |
-| `template`       | Object  | Replace components html's content keyword. |
-| `restore`        | Boolean | Restore html initial content.              |
-| `nestedIncludes` | Boolean | Replace include html's content.            |
+| Name             | Type    | Default         | Description                                |
+| ---------------- | ------- | --------------- | ------------------------------------------ |
+| `componentsPath` | String  | './components/' | Components html file path.                 |
+| `template`       | Object  | null            | Replace components html's content keyword. |
+| `restore`        | Boolean | false           | Restore html initial content.              |
+| `nestedIncludes` | Boolean | false           | Replace include html's content.            |
 
 ---
 

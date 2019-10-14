@@ -66,6 +66,8 @@ module.exports = function(opts) {
         opts = { componentsPath: opts }
     }
 
+    opts.componentsPath = opts.componentsPath || './components/'
+
     return through.obj(function(file, enc, callback) {
         if (file.isNull()) {
             callback(null, file)
