@@ -9,6 +9,19 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
+function replaceTemplate(template, contents) {
+    if (!template) {
+        return contents
+    }
+
+    for (let k in template) {
+        let k_reg = eval("/" + escapeRegExp(k) + "/g")
+        contents = contents.replace(k_reg, template[k])
+    }
+
+    return contents
+}
+
 function importHtml(data, opts) {
     const fileReg = /<!-- @import "(.*)" -->/gi
 
@@ -23,25 +36,14 @@ function importHtml(data, opts) {
                     encoding: 'utf8'
                 });
 
-                if (opts.template) {
-                    for (let k in opts.template) {
-                        let k_reg = eval("/" + escapeRegExp(k) + "/g")
-                        nested_include_content = nested_include_content.replace(k_reg, opts.template[k])
-                    }
-                }
+                nested_include_content = replaceTemplate(opts.template, nested_include_content)
                 console.log('Nested @import: ' + opts.componentsPath + componentName)
 
                 return '<!-- import "' + componentName + '" -->\n' + nested_include_content + '\n' + IMPORT_END
             })
         }
 
-        if (opts.template) {
-            for (let k in opts.template) {
-                let k_reg = eval("/" + escapeRegExp(k) + "/g")
-                read_file_content = read_file_content.replace(k_reg, opts.template[k])
-            }
-        }
-
+        read_file_content = replaceTemplate(opts.template, read_file_content)
         console.log('@import: ' + opts.componentsPath + componentName)
 
         return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
@@ -76,17 +78,11 @@ module.exports = function(opts) {
         }
 
         let data = file.contents.toString()
+        data = replaceTemplate(opts.template, data)
 
-        if (opts.template) {
-            for (let k in opts.template) {
-                let k_reg = eval("/" + escapeRegExp(k) + "/g")
-                data = data.replace(k_reg, opts.template[k])
-            }
-        }
-
-        let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts);
-
+        let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts)
         file.contents = new Buffer(dataReplace)
+
         callback(null, file)
     })
 }

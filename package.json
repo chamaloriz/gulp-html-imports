@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-imports",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A gulp plugin which can import html files, and restore html files.",
   "main": "index.js",
   "dependencies": {
@@ -9,6 +9,10 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yijian002/gulp-html-imports.git"
   },
   "keywords": [
     "gulp",

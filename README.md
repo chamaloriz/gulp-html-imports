@@ -106,26 +106,14 @@ gulp.task('html_restore', function () {
 </html>
 ```
 
-
 ## Options
 
-#### componentsPath: 
-
-Components html file path.
-
-- Type: String
-
-#### template: 
-
-Replace components html's content keyword.
-
-- Type: Object
-
-#### restore: 
-
-Restore html initial content.
-
-- Type: Boolean
+| Name             | Type    | Description                                |
+| ---------------- | ------- | ------------------------------------------ |
+| `componentsPath` | String  | Components html file path.                 |
+| `template`       | Object  | Replace components html's content keyword. |
+| `restore`        | Boolean | Restore html initial content.              |
+| `nestedIncludes` | Boolean | Replace include html's content.            |
 
 ---
 
