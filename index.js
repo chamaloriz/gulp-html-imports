@@ -23,9 +23,9 @@ function replaceTemplate(template, contents) {
 }
 
 function importHtml(data, opts) {
-    const fileReg = /<!-- @import "(.*)" -->/gi
+    const fileReg = /<!-- @import "(.*)" ({.*}) -->/gi
 
-    return data.replace(fileReg, (match, componentName) => {
+    return data.replace(fileReg, (match, componentName, json) => {
         let read_file_content = fs.readFileSync(opts.componentsPath + componentName, {
             encoding: 'utf8'
         });
@@ -38,15 +38,15 @@ function importHtml(data, opts) {
 
                 nested_include_content = replaceTemplate(opts.template, nested_include_content)
                 console.log('Nested @import: ' + opts.componentsPath + componentName)
-
-                return '<!-- import "' + componentName + '" -->\n' + nested_include_content + '\n' + IMPORT_END
+                return nested_include_content//'<!-- import "' + componentName + '" -->\n' + nested_include_content + '\n' + IMPORT_END
             })
         }
 
         read_file_content = replaceTemplate(opts.template, read_file_content)
-        console.log('@import: ' + opts.componentsPath + componentName)
+        //console.log('@import: ' + opts.componentsPath + componentName)
+        importVars(read_file_content, json)
 
-        return '<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
+        return importVars(read_file_content, json)//'<!-- import "' + componentName + '" -->\n' + read_file_content + '\n' + IMPORT_END
     })
 }
 
@@ -55,10 +55,21 @@ function restoreHtml(data, opts) {
 
     return data.replace(fileReg, (match, componentName) => {
         let import_component = '<!-- @import "' + componentName + '" -->';
-        console.log(import_component)
 
         return import_component
     })
+}
+
+function importVars(data, json) {
+    const fileReg = /{{(.*)}}/gi
+
+    let parsed_json = JSON.parse(json)
+
+    let final = data.replace(fileReg, (match, tagName) => {
+        return parsed_json[tagName]
+    })
+
+    return final
 }
 
 module.exports = function(opts) {
@@ -69,6 +80,7 @@ module.exports = function(opts) {
     opts.componentsPath = opts.componentsPath || './components/'
 
     return through.obj(function(file, enc, callback) {
+
         if (file.isNull()) {
             callback(null, file)
             return
@@ -80,11 +92,16 @@ module.exports = function(opts) {
         }
 
         let data = file.contents.toString()
+
+        //replace tags from html to
         data = replaceTemplate(opts.template, data)
 
+        // replace <!-- @import "" {} -->
         let dataReplace = opts.restore ? restoreHtml(data, opts) : importHtml(data, opts)
+
         file.contents = new Buffer(dataReplace)
 
         callback(null, file)
+
     })
 }

@@ -1,4 +1,4 @@
-# gulp-html-imports
+# gulp-html-imports and vars
 
 - A gulp plugin.
 - Import html files into html files.
@@ -61,7 +61,7 @@ gulp.task('html_restore', function () {
 <html>
   <body>
     <div>HTML import HTML</div>
-    <!-- @import "demo.html" -->
+    <!-- @import "demo.html" {} -->
   </body>
 </html>
 ```
